@@ -111,46 +111,90 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 const slider = document.querySelector('.slider');
-        const slides = document.querySelectorAll('.slide');
-        const arrowLeft = document.querySelector('.arrow-left');
-        const arrowRight = document.querySelector('.arrow-right');
-        let currentIndex = 0;
-        const totalSlides = slides.length;
+const slides = document.querySelectorAll('.slide');
+const arrowLeft = document.querySelector('.arrow-left');
+const arrowRight = document.querySelector('.arrow-right');
+let currentIndex = 0;
+const totalSlides = slides.length;
 
-        function moveSlider(direction) {
-            currentIndex = (currentIndex + direction + totalSlides) % totalSlides;
-            updateSlider();
-        }
+let touchStartX = 0;
+let touchEndX = 0;
 
-        function updateSlider() {
-            slider.style.transform = `translateX(-${currentIndex * 100}%)`;
-        }
+function moveSlider(direction) {
+    currentIndex = (currentIndex + direction + totalSlides) % totalSlides;
+    updateSlider();
+}
 
-        function autoRotate() {
-            moveSlider(1);
-        }
+function updateSlider() {
+    slider.style.transform = `translateX(-${currentIndex * 100}%)`;
+}
 
-        arrowLeft.addEventListener('click', (e) => {
-            e.preventDefault();
-            moveSlider(-1);
-        });
+function autoRotate() {
+    moveSlider(1);
+}
 
-        arrowRight.addEventListener('click', (e) => {
-            e.preventDefault();
-            moveSlider(1);
-        });
+arrowLeft.addEventListener('click', (e) => {
+    e.preventDefault();
+    moveSlider(-1);
+});
 
-        // Auto-rotate every 4 seconds
-        setInterval(autoRotate, 4000);
+arrowRight.addEventListener('click', (e) => {
+    e.preventDefault();
+    moveSlider(1);
+});
 
-        // Preload images
-        function preloadImages() {
-            const imageUrls = Array.from(slides).map(slide => slide.querySelector('img').src);
-            imageUrls.forEach(url => {
-                const img = new Image();
-                img.src = url;
-            });
-        }
+// Touch events for swipe functionality
+slider.addEventListener('touchstart', (e) => {
+    touchStartX = e.changedTouches[0].screenX;
+});
 
-        // Call preloadImages when the page loads
-        window.addEventListener('load', preloadImages);
+slider.addEventListener('touchend', (e) => {
+    touchEndX = e.changedTouches[0].screenX;
+    handleSwipe();
+});
+
+function handleSwipe() {
+    const swipeThreshold = 50; // Minimum distance (in pixels) to trigger a swipe
+    if (touchStartX - touchEndX > swipeThreshold) {
+        // Swipe left
+        moveSlider(1);
+    } else if (touchEndX - touchStartX > swipeThreshold) {
+        // Swipe right
+        moveSlider(-1);
+    }
+}
+
+// Auto-rotate every 4 seconds
+let autoRotateInterval = setInterval(autoRotate, 4000);
+
+// Pause auto-rotation on user interaction
+function pauseAutoRotate() {
+    clearInterval(autoRotateInterval);
+}
+
+function resumeAutoRotate() {
+    autoRotateInterval = setInterval(autoRotate, 3000);
+}
+
+slider.addEventListener('touchstart', pauseAutoRotate);
+slider.addEventListener('touchend', resumeAutoRotate);
+arrowLeft.addEventListener('click', () => {
+    pauseAutoRotate();
+    setTimeout(resumeAutoRotate, 3000);
+});
+arrowRight.addEventListener('click', () => {
+    pauseAutoRotate();
+    setTimeout(resumeAutoRotate, 3000);
+});
+
+// Preload images
+function preloadImages() {
+    const imageUrls = Array.from(slides).map(slide => slide.querySelector('img').src);
+    imageUrls.forEach(url => {
+        const img = new Image();
+        img.src = url;
+    });
+}
+
+// Call preloadImages when the page loads
+window.addEventListener('load', preloadImages);
