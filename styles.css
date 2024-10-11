@@ -252,8 +252,8 @@ body {
 }
 
 .btn-primary {
-  background-color: #ffffff;
-  color: var(--primary-color);
+  background-color: #0c0065;
+  color: #ffffff;
   padding: 15px 30px;
   text-decoration: none;
   border-radius: 25px;
