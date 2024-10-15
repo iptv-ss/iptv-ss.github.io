@@ -53,9 +53,33 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Set default currency to CAD
-    updatePrices('CAD');
+    // Function to detect location and set the default currency
+    function detectLocationAndSetCurrency() {
+        fetch('https://ipinfo.io?token=91d1ef62bda863') // Replace with your actual API token from https://ipinfo.io
+            .then(response => response.json())
+            .then(data => {
+                const country = data.country;
+                if (country === 'IN') {
+                    // Set to INR if in India
+                    updatePrices('INR');
+                    currencyToggle.checked = false; // Make sure the toggle is set to INR
+                } else {
+                    // Set to CAD for Canada or any other country
+                    updatePrices('CAD');
+                    currencyToggle.checked = true; // Toggle to CAD
+                }
+            })
+            .catch(() => {
+                // Fallback to CAD in case of any error or if geolocation fails
+                updatePrices('CAD');
+                currencyToggle.checked = true;
+            });
+    }
 
+    // Automatically detect location and set the currency
+    detectLocationAndSetCurrency();
+
+    // Toggle currency manually using the switcher
     currencyToggle.addEventListener('change', function() {
         updatePrices(this.checked ? 'CAD' : 'INR');
     });
