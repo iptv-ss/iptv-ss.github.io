@@ -18,6 +18,10 @@ body {
   background-color: var(--light-bg);
 }
 
+html {
+  scroll-padding-top: 80px; /* Adjust the value based on your header height */
+}
+
 .container {
   max-width: 1200px;
   margin: 0 auto;
@@ -267,7 +271,7 @@ body {
 }
 
 .features {
-  padding: 80px 0;
+  padding: 20px 0;
   background-color: #ffffff;
 }
 
@@ -301,7 +305,7 @@ body {
 }
 
 .compatibility {
-  padding: 80px 0;
+  padding: 20px 0 1px 0;
   background-color: #ffffff;
 }
 
@@ -322,6 +326,38 @@ body {
 }
 
 .compatibility-item i {
+  font-size: 3rem;
+  color: var(--primary-color);
+  margin-bottom: 10px;
+}
+
+.downloads {
+  padding: 20px 0 50px 0;
+  background-color: #ffffff;
+}
+
+.downloads h2 {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.downloads p {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.downloads-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 20px;
+  margin-bottom: 40px;
+}
+
+.downloads-item {
+  text-align: center;
+}
+
+.downloads-item i {
   font-size: 3rem;
   color: var(--primary-color);
   margin-bottom: 10px;
@@ -350,7 +386,7 @@ body {
 }
 
 .pricing {
-  padding: 80px 0;
+  padding: 20px 0;
 }
 
 .pricing h2 {
@@ -445,7 +481,7 @@ body {
 }
 
 .faq {
-  padding: 80px 0;
+  padding: 20px 0;
   background-color: #ffffff;
 }
 
