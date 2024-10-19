@@ -22,6 +22,10 @@ html {
   scroll-padding-top: 80px; /* Adjust the value based on your header height */
 }
 
+section {
+    scroll-margin-top: 80px; /* Adjust this value to match your header's height */
+}
+
 .container {
   max-width: 1200px;
   margin: 0 auto;
@@ -812,23 +816,39 @@ html {
     height: auto;
 }
 
+/* Tutorial Steps Grid */
 .steps-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 20px;
-    padding: 20px 0;
+    margin-top: 40px;
 }
 
-.tutorial-card {
-    background: #fff;
-    border-radius: 10px;
+.step-card {
+    background-color: #ffffff;
     padding: 20px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    border-radius: 10px;
     text-align: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-.tutorial-card img {
-    width: 100%; /* Responsive image settings */
+.step-card h2 {
+    font-size: 1.25rem;
+    margin-bottom: 15px;
+}
+
+.step-card p {
+    margin-top: 15px;
+}
+
+.step-card img {
+    width: 100%;
     height: auto;
-    margin-bottom: 20px;
+    border-radius: 5px;
+}
+
+@media (max-width: 768px) {
+    .steps-grid {
+        grid-template-columns: 1fr;
+    }
 }
