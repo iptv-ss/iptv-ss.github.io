@@ -22,10 +22,6 @@ html {
   scroll-padding-top: 80px; /* Adjust the value based on your header height */
 }
 
-section {
-    scroll-margin-top: 80px; /* Adjust this value to match your header's height */
-}
-
 .container {
   max-width: 1200px;
   margin: 0 auto;
@@ -817,11 +813,23 @@ section {
 }
 
 /* Tutorial Steps Grid */
+.section.tutorial {
+    padding-top: 90px; /* Adjust this value to your navbar's height if necessary */
+    background-color: #f8f9fa; /* Assuming this matches your pricing section background */
+    padding-bottom: 40px; /* Same as your pricing section */
+}
+
+.tutorial h1, .tutorial p {
+    margin: 0 auto;
+    text-align: center;
+    padding: 10px 20px; /* Add padding if necessary */
+}
+
 .steps-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 20px;
-    margin-top: 40px;
+    margin-top: 20px;
 }
 
 .step-card {
@@ -847,8 +855,14 @@ section {
     border-radius: 5px;
 }
 
+@media (min-width: 768px) {
+    .steps-grid {
+        grid-template-columns: repeat(2, 1fr); /* Ensures only two columns on screens wider than 768px */
+    }
+}
+
 @media (max-width: 768px) {
     .steps-grid {
-        grid-template-columns: 1fr;
+        grid-template-columns: 1fr; /* Single column layout for smaller screens */
     }
 }
