@@ -850,9 +850,10 @@ html {
 }
 
 .step-card img {
-    width: 100%;
-    height: auto;
-    border-radius: 5px;
+    width: 100%; /* Makes the image responsive */
+    height: auto; /* Maintains the aspect ratio */
+    border-radius: 5px; /* Optional: Adds rounded corners to the image */
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2); /* Optional: Adds a subtle shadow for depth */
 }
 
 @media (min-width: 768px) {
