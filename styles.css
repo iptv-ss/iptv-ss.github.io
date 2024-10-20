@@ -826,6 +826,18 @@ html {
     padding: 10px 20px; /* Add padding if necessary */
 }
 
+.tips {
+    padding-top: 40px; /* Adjust this value to your navbar's height if necessary */
+    background-color: #f8f9fa; /* Assuming this matches your pricing section background */
+    padding-bottom: 40px; /* Same as your pricing section */
+}
+
+.tips h1, .tips p {
+    margin: 0 auto;
+    text-align: center;
+    padding: 10px 20px; /* Add padding if necessary */
+}
+
 .steps-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
