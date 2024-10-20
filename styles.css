@@ -807,13 +807,14 @@ html {
   }
 }
 
+/* Tutorial Steps Grid */
+
 .responsive-img {
     max-width: 100%;
     height: auto;
 }
 
-/* Tutorial Steps Grid */
-.section.tutorial {
+.tutorial {
     padding-top: 90px; /* Adjust this value to your navbar's height if necessary */
     background-color: #f8f9fa; /* Assuming this matches your pricing section background */
     padding-bottom: 40px; /* Same as your pricing section */
