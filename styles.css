@@ -827,7 +827,7 @@ html {
 }
 
 .tips {
-    padding-top: 40px; /* Adjust this value to your navbar's height if necessary */
+    /*padding-top: 20px; /* Adjust this value to your navbar's height if necessary */
     background-color: #f8f9fa; /* Assuming this matches your pricing section background */
     padding-bottom: 40px; /* Same as your pricing section */
 }
