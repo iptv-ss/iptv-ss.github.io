@@ -43,7 +43,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
 
-        const whatsappLink = 'https://wa.me/12267796050?text=';
+        const whatsappLink = 'https://wa.me/14375007575?text=';
         document.getElementById('get-trial').href = `${whatsappLink}Hello, I want to get a 24-hour free trial for Starshare IPTV.`;
         Object.keys(prices[currency]).forEach(key => {
             const element = document.getElementById(`buy-${key}`);
