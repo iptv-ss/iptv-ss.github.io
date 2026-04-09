@@ -525,6 +525,39 @@ html {
   display: block;
 }
 
+.apk-table-wrap {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  margin: 12px 0;
+}
+
+.apk-table {
+  width: 100%;
+  min-width: 640px;
+  border-collapse: collapse;
+}
+
+.apk-table th,
+.apk-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+  vertical-align: top;
+}
+
+.apk-table-link {
+  color: #0c0065;
+  font-weight: bold;
+  text-decoration: none;
+  overflow-wrap: anywhere;
+}
+
+.apk-table-link:hover {
+  color: #0056b3;
+  text-decoration: underline;
+}
+
 .url-copy-item {
   display: flex;
   align-items: center;
@@ -610,6 +643,11 @@ html {
 
 /* Mobile Styles */
 @media (max-width: 768px) {
+  .apk-table {
+    min-width: 560px;
+    font-size: 0.9rem;
+  }
+
   .header-content {
     display: flex;
     align-items: center;
