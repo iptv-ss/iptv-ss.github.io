@@ -538,6 +538,10 @@ html {
   border-collapse: collapse;
 }
 
+.apk-table-single {
+  min-width: 100%;
+}
+
 .apk-table th,
 .apk-table td {
   border: 1px solid #ddd;
@@ -646,6 +650,15 @@ html {
   .apk-table {
     min-width: 560px;
     font-size: 0.9rem;
+  }
+
+  .apk-table-single {
+    min-width: 100%;
+    font-size: 0.85rem;
+  }
+
+  .apk-table-single td {
+    padding: 7px;
   }
 
   .header-content {
