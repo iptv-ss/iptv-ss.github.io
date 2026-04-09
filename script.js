@@ -1,3 +1,24 @@
+const WHATSAPP_NUMBER = '14375007575';
+const WHATSAPP_BASE_URL = `https://wa.me/${WHATSAPP_NUMBER}`;
+const LOGIN_ISSUE_WHATSAPP_MESSAGE = 'Hello, I am facing issues with login.';
+const SERVICE_URLS = {
+    player: [
+        'http://premimum.online:80',
+        'http://starshare.online:80',
+        'http://starshare.one:8080'
+    ],
+    morePlayer: [
+        'http://uniqueott.com:80',
+        'http://du7g.com:80',
+        'http://starshare.one:80'
+    ],
+    smartHost: [
+        'http://yingpring.online:8080',
+        'http://mysouq1.com:8080',
+        'https://mysouq1.com'
+    ]
+};
+
 document.addEventListener('DOMContentLoaded', function() {
     const currencyToggle = document.getElementById('currency-switcher');
     const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
@@ -35,6 +56,114 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     };
 
+    function buildWhatsAppLink(message) {
+        return `${WHATSAPP_BASE_URL}?text=${encodeURIComponent(message)}`;
+    }
+
+    function applyGlobalWhatsAppLinks() {
+        document.querySelectorAll('.whatsapp-button').forEach((button) => {
+            button.href = WHATSAPP_BASE_URL;
+            button.target = '_blank';
+            button.rel = 'noopener noreferrer';
+        });
+    }
+
+    function createUrlBoxes(urls) {
+        return urls.map((url) => `
+            <div class="url-copy-item">
+                <code class="url-copy-text">${url}</code>
+                <button type="button" class="url-copy-button" data-copy-url="${url}">Copy</button>
+            </div>
+        `).join('');
+    }
+
+    function renderUrlBoxes(containerId, urls) {
+        const container = document.getElementById(containerId);
+        if (!container) return;
+        container.innerHTML = createUrlBoxes(urls);
+    }
+
+    function renderSharedLoginUrls() {
+        const sharedContainer = document.getElementById('shared-login-urls');
+        if (sharedContainer) {
+            sharedContainer.innerHTML = `
+                <p><strong>URL(s) For Player:</strong></p>
+                <div>${createUrlBoxes(SERVICE_URLS.player)}</div>
+                <p><strong>More URL(s) For Player:</strong></p>
+                <div>${createUrlBoxes(SERVICE_URLS.morePlayer)}</div>
+                <p><strong>URL(s) for Smart Host:</strong></p>
+                <div>${createUrlBoxes(SERVICE_URLS.smartHost)}</div>
+            `;
+        }
+    }
+
+    async function copyTextToClipboard(text) {
+        if (navigator.clipboard && window.isSecureContext) {
+            await navigator.clipboard.writeText(text);
+            return;
+        }
+
+        const textArea = document.createElement('textarea');
+        textArea.value = text;
+        textArea.style.position = 'fixed';
+        textArea.style.left = '-9999px';
+        document.body.appendChild(textArea);
+        textArea.focus();
+        textArea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textArea);
+    }
+
+    function attachCopyButtonsHandler() {
+        document.addEventListener('click', async (event) => {
+            const button = event.target.closest('.url-copy-button');
+            if (!button) return;
+            const url = button.getAttribute('data-copy-url');
+            if (!url) return;
+            try {
+                await copyTextToClipboard(url);
+                const previousText = button.textContent;
+                button.textContent = 'Copied!';
+                setTimeout(() => {
+                    button.textContent = previousText || 'Copy';
+                }, 1200);
+            } catch {
+                button.textContent = 'Failed';
+                setTimeout(() => {
+                    button.textContent = 'Copy';
+                }, 1200);
+            }
+        });
+    }
+
+    function applyLoginHelpWhatsAppLinks() {
+        const loginHelpLink = buildWhatsAppLink(LOGIN_ISSUE_WHATSAPP_MESSAGE);
+        ['login-help-whatsapp-link', 'faq-login-help-whatsapp-link'].forEach((id) => {
+            const element = document.getElementById(id);
+            if (!element) return;
+            element.href = loginHelpLink;
+            element.target = '_blank';
+            element.rel = 'noopener noreferrer';
+        });
+    }
+
+    function openFaqFromHash() {
+        if (!window.location.hash) return;
+        let targetElement = null;
+        try {
+            targetElement = document.querySelector(decodeURIComponent(window.location.hash));
+        } catch {
+            targetElement = null;
+        }
+        if (!targetElement) return;
+        const faqItem = targetElement.classList.contains('faq-item')
+            ? targetElement
+            : targetElement.closest('.faq-item');
+        if (faqItem) {
+            faqItem.classList.add('open');
+        }
+    }
+
     function updatePrices(currency) {
         Object.keys(prices[currency]).forEach(key => {
             const element = document.getElementById(`price-${key}`);
@@ -43,12 +172,17 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
 
-        const whatsappLink = 'https://wa.me/14375007575?text=';
-        document.getElementById('get-trial').href = `${whatsappLink}Hello, I want to get a 24-hour free trial for Starshare IPTV.`;
+        document.querySelectorAll('[id="get-trial"]').forEach((trialLink) => {
+            trialLink.href = buildWhatsAppLink('Hello, I want to get a 24-hour free trial for Starshare IPTV.');
+            trialLink.target = '_blank';
+            trialLink.rel = 'noopener noreferrer';
+        });
         Object.keys(prices[currency]).forEach(key => {
             const element = document.getElementById(`buy-${key}`);
             if (element) {
-                element.href = `${whatsappLink}Hello, I want to buy ${key.replace('-', ' ')}, priced at ${prices[currency][key]} for Starshare IPTV.`;
+                element.href = buildWhatsAppLink(`Hello, I want to buy ${key.replace('-', ' ')}, priced at ${prices[currency][key]} for Starshare IPTV.`);
+                element.target = '_blank';
+                element.rel = 'noopener noreferrer';
             }
         });
     }
@@ -76,7 +210,16 @@ document.addEventListener('DOMContentLoaded', function() {
             });
     }
 
-    // Automatically detect location and set the currency
+    // Apply WhatsApp link globally and detect location/currency
+    applyGlobalWhatsAppLinks();
+    renderUrlBoxes('player-urls-list', SERVICE_URLS.player);
+    renderUrlBoxes('more-player-urls-list', SERVICE_URLS.morePlayer);
+    renderUrlBoxes('smart-host-urls-list', SERVICE_URLS.smartHost);
+    renderSharedLoginUrls();
+    attachCopyButtonsHandler();
+    applyLoginHelpWhatsAppLinks();
+    openFaqFromHash();
+    window.addEventListener('hashchange', openFaqFromHash);
     detectLocationAndSetCurrency();
 
     // Toggle currency manually using the switcher
@@ -107,7 +250,16 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     faqItems.forEach(item => {
-        item.addEventListener('click', function() {
+        item.addEventListener('click', function(event) {
+            const clickedInsideUrlBox = event.target.closest('.url-copy-item');
+            const clickedInteractiveElement = event.target.closest('button, a, input, textarea, select');
+            const selectedText = window.getSelection ? window.getSelection().toString().trim() : '';
+
+            // Keep FAQ open while using URL copy boxes or selecting text.
+            if (clickedInsideUrlBox || clickedInteractiveElement || selectedText) {
+                return;
+            }
+
             this.classList.toggle('open');
         });
     });
@@ -126,8 +278,12 @@ document.addEventListener('DOMContentLoaded', function() {
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
             if (this.classList.contains('tab-button')) return;
+            const href = this.getAttribute('href');
+            if (!href || href === '#') return;
+            const target = document.querySelector(href);
+            if (!target) return;
             e.preventDefault();
-            document.querySelector(this.getAttribute('href')).scrollIntoView({
+            target.scrollIntoView({
                 behavior: 'smooth'
             });
         });
