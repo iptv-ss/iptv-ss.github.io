@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     const prices = {
         INR: {
-            '1-month': '300 INR',
+            '1-month': '350 INR',
             '3-months': '1000 INR',
             '6-months': '1800 INR',
             '12-months': '3000 INR',
