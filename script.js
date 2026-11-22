@@ -172,7 +172,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
 
-        document.querySelectorAll('[id="get-trial"]').forEach((trialLink) => {
+        document.querySelectorAll('[id="get-trial"], [id="get-trial-pricing"]').forEach((trialLink) => {
             trialLink.href = buildWhatsAppLink('Hello, I want to get a 24-hour free trial for Starshare IPTV.');
             trialLink.target = '_blank';
             trialLink.rel = 'noopener noreferrer';
