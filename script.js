@@ -2,6 +2,15 @@ const WHATSAPP_NUMBER = '14375007575';
 const WHATSAPP_BASE_URL = `https://wa.me/${WHATSAPP_NUMBER}`;
 const LOGIN_ISSUE_WHATSAPP_MESSAGE = 'Hello, I am facing issues with login.';
 const SERVICE_URLS = {
+    current: [
+        'http://8kplayers.com:8080',
+        'http://premimumlife.online:8080',
+        'http://coffeedonuttv.site:8080',
+        'http://xerocircle.com:8080',
+        'http://cyberthreat.click:8080',
+        'http://tickstar1.xyz:8080',
+        'http://purnatv.store:8080'
+    ],
     player: [
         'http://premimum.online:80',
         'http://starshare.online:80',
@@ -87,12 +96,17 @@ document.addEventListener('DOMContentLoaded', function() {
         const sharedContainer = document.getElementById('shared-login-urls');
         if (sharedContainer) {
             sharedContainer.innerHTML = `
-                <p><strong>URL(s) For Player:</strong></p>
-                <div>${createUrlBoxes(SERVICE_URLS.player)}</div>
-                <p><strong>More URL(s) For Player:</strong></p>
-                <div>${createUrlBoxes(SERVICE_URLS.morePlayer)}</div>
-                <p><strong>URL(s) for Smart Host:</strong></p>
-                <div>${createUrlBoxes(SERVICE_URLS.smartHost)}</div>
+                <p><strong>Current Host URL(s):</strong></p>
+                <div>${createUrlBoxes(SERVICE_URLS.current)}</div>
+                <details class="old-urls-dropdown">
+                    <summary>If the above didn't work, try these</summary>
+                    <p><strong>URL(s) For Player:</strong></p>
+                    <div>${createUrlBoxes(SERVICE_URLS.player)}</div>
+                    <p><strong>More URL(s) For Player:</strong></p>
+                    <div>${createUrlBoxes(SERVICE_URLS.morePlayer)}</div>
+                    <p><strong>URL(s) for Smart Host:</strong></p>
+                    <div>${createUrlBoxes(SERVICE_URLS.smartHost)}</div>
+                </details>
             `;
         }
     }
@@ -212,6 +226,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Apply WhatsApp link globally and detect location/currency
     applyGlobalWhatsAppLinks();
+    renderUrlBoxes('current-urls-list', SERVICE_URLS.current);
     renderUrlBoxes('player-urls-list', SERVICE_URLS.player);
     renderUrlBoxes('more-player-urls-list', SERVICE_URLS.morePlayer);
     renderUrlBoxes('smart-host-urls-list', SERVICE_URLS.smartHost);
